@@ -1,4 +1,4 @@
-﻿namespace InfoTrack.API.Models;
+﻿namespace InfoTrack.API.Models.Data;
 
 public class Location
 {

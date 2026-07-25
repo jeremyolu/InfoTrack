@@ -1,6 +1,6 @@
 ﻿using InfoTrack.API.Interfaces.Repositories;
 using InfoTrack.API.Interfaces.Services;
-using InfoTrack.API.Models;
+using InfoTrack.API.Models.Data;
 using InfoTrack.API.Models.Responses;
 using System.Net;
 

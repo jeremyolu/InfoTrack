@@ -1,4 +1,4 @@
-﻿using InfoTrack.API.Models;
+﻿using InfoTrack.API.Models.Data;
 using InfoTrack.API.Models.Responses;
 
 namespace InfoTrack.API.Interfaces.Services;

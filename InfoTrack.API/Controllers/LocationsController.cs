@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace InfoTrack.API.Controllers;
 
 [ApiController]
-[Route("api/locations")]
-public class LocationsController : ControllerBase
+[Route("infotrack/api/locations")]
+public class LocationsController : BaseController
 {
     private readonly ILogger<LocationsController> _logger;
     private readonly ILocationService _locationService;
@@ -21,6 +21,6 @@ public class LocationsController : ControllerBase
     {
         var response = await _locationService.GetLocations();
 
-        return Ok(response);
+        return SetResponseCode(response.StatusCode, response);
     }
 }

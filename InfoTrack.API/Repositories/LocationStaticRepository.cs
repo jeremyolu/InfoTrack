@@ -1,5 +1,5 @@
 ﻿using InfoTrack.API.Interfaces.Repositories;
-using InfoTrack.API.Models;
+using InfoTrack.API.Models.Data;
 
 namespace InfoTrack.API.Repositories;
 

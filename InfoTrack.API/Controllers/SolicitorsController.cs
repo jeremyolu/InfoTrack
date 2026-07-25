@@ -1,21 +1,27 @@
+using InfoTrack.API.Interfaces.Services;
+using InfoTrack.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoTrack.API.Controllers;
 
 [ApiController]
-[Route("solicitors")]
-public class SolicitorsController : ControllerBase
+[Route("infotrack/api/solicitors")]
+public class SolicitorsController : BaseController
 {
     private readonly ILogger<SolicitorsController> _logger;
+    private readonly ISolicitorService _solicitorService;
 
-    public SolicitorsController(ILogger<SolicitorsController> logger)
+    public SolicitorsController(ILogger<SolicitorsController> logger, ISolicitorService solicitorService)
     {
         _logger = logger;
+        _solicitorService = solicitorService;
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> Get([FromQuery] string location, string? sortBy)
     {
-        return Ok("Test");
+        var response = await _solicitorService.GetSolicitorsByLocationAsync(location, sortBy);
+
+        return SetResponseCode(response.StatusCode, response);
     }
 }
