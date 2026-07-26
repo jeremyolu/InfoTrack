@@ -4,17 +4,22 @@ using InfoTrack.API.Interfaces.Services;
 using InfoTrack.API.Providers;
 using InfoTrack.API.Repositories;
 using InfoTrack.API.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddAuthorization();
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationStaticRepository>();
-builder.Services.AddScoped<ILocationService, LocationService>();
 
-builder.Services.AddScoped<ISolicitorProvider, SolicitorScraperProvider>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ILocationService, LocationService>();
 builder.Services.AddScoped<ISolicitorService, SolicitorService>();
+builder.Services.AddScoped<ISolicitorProvider, SolicitorScraperProvider>();
 
 builder.Services.AddHttpClient<ISolicitorProvider, SolicitorScraperProvider>(client =>
 {
@@ -22,13 +27,37 @@ builder.Services.AddHttpClient<ISolicitorProvider, SolicitorScraperProvider>(cli
     client.DefaultRequestHeaders.Add("User-Agent", "InfoTrack");
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.Cookie.Name = "InfoTrack.Auth";
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+        options.Cookie.SameSite = SameSiteMode.None;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+        options.SlidingExpiration = true; 
+
+        options.LoginPath = "/infotrack/api/auth/login";
+        options.Events.OnRedirectToLogin = context =>
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            return Task.CompletedTask;
+        };
+        options.Events.OnRedirectToAccessDenied = context =>
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
+            return Task.CompletedTask;
+        };
+    });
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Cors", policy =>
     {
         policy.WithOrigins("http://localhost:3000")
+              .AllowAnyMethod()
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowCredentials();
     });
 });
 
@@ -41,6 +70,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("Cors");
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

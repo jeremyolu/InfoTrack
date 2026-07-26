@@ -1,9 +1,10 @@
 using InfoTrack.API.Interfaces.Services;
-using InfoTrack.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InfoTrack.API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("infotrack/api/solicitors")]
 public class SolicitorsController : BaseController
