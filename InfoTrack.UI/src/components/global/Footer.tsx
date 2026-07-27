@@ -7,7 +7,7 @@ export function Footer() {
         <p className="footer-text">InfoTrack</p>
       </div>
       <div className="footer-right">
-       <p className="footer-text">Jeremy Olu</p>
+       <p className="footer-text">Developed by Jeremy Olu</p>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<ILocationRepository, LocationStaticRepository>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ILocationService, LocationService>();
@@ -54,7 +54,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("Cors", policy =>
     {
-        policy.WithOrigins("http://localhost:3000")
+        policy.WithOrigins("http://localhost:5173")
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();
@@ -68,8 +68,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseCors("Cors");
 app.UseHttpsRedirection();
+app.UseCors("Cors");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

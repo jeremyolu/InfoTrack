@@ -4,5 +4,7 @@ namespace InfoTrack.API.Interfaces.Repositories;
 
 public interface IUserRepository
 {
-    User? GetUser(string username, string password);
+    User? GetUser(int id);
+    User? GetUser(string username);
+    User? GetUserByAuth(string username, string password);
 }

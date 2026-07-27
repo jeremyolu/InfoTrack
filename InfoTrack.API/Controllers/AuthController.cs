@@ -2,6 +2,7 @@ using InfoTrack.API.Interfaces.Services;
 using InfoTrack.API.Models.Requests;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Security.Claims;
@@ -24,13 +25,28 @@ public class AuthController : BaseController
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
     {
-        var identity = await _authService.SetUserAsync(loginRequest);
+        var identity = await _authService.AuthenticateUserAsync(loginRequest);
 
         if (identity == null)
             return SetResponseCode(HttpStatusCode.Unauthorized);
 
         await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
 
+        return SetResponseCode(HttpStatusCode.OK);
+    }
+
+    [HttpGet("account")]
+    [Authorize]
+    public async Task<IActionResult> Account()
+    {
+        var response = await _authService.GetUserAccountAsync(GetUserId());
+
+        return SetResponseCode(response.StatusCode, response); ;
+    }
+
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
         return Ok();
     }
 }

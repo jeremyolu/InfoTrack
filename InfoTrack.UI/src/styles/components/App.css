@@ -1,3 +1,43 @@
 .main-container {
   padding-bottom: 80px;
 }
+
+.logo-container {
+  text-align: center;
+}
+
+.logo-container img {
+  width: 120px;
+  height: auto;
+}
+
+.button {
+  padding: 0.7rem;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+}
+
+.button-blue {
+  background-color: #0696B7;
+  color: #ffffff;
+}
+
+.button-white {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.button-blue:hover:not(:disabled) {
+  background-color: #7cd2e6;
+}
+
+.button-white:hover:not(:disabled) {
+  background-color: #cacccc;
+}
+
+.button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}

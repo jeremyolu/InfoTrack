@@ -3,7 +3,7 @@ using InfoTrack.API.Models.Data;
 
 namespace InfoTrack.API.Repositories;
 
-public class LocationStaticRepository : ILocationRepository
+public class LocationRepository : ILocationRepository
 {
     public IEnumerable<Location> GetLocations()
     {

@@ -6,7 +6,7 @@ export function DashboardPage() {
 
   return (
     <div className="dashboard-page-container">
-      <div className="dashboard-logo-container">
+      <div className="logo-container">
         <img src={Logo} alt="InfoTrack logo" />
       </div>
 

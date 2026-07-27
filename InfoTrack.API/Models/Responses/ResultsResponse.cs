@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace InfoTrack.API.Models.Responses;
+﻿namespace InfoTrack.API.Models.Responses;
 
 public class ResultsResponse<T> : BaseResponse
 {

@@ -2,15 +2,6 @@
   padding: 20px;
 }
 
-.dashboard-logo-container {
-  text-align: center;
-}
-
-.dashboard-logo-container img {
-  width: 120px;
-  height: auto;
-}
-
 .dashboard-page-inner {
   display: flex;
   gap: 16px;

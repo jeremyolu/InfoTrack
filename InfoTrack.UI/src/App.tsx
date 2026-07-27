@@ -1,12 +1,11 @@
 // App.tsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Nav } from "./components/global/Nav";
-import { Footer } from "./components/global/Footer";
+import { AuthProvider } from "./contexts/AuthContext";
+import { ProtectedLayout } from "./auth/ProtectedLayout";
 
 import { DashboardPage } from "./pages/DashboardPage";
-// import { LocationsPage } from "./pages/LocationsPage";
-// import { SolicitorsPage } from "./pages/SolicitorsPage";
+import LoginPage from "./pages/LoginPage";
 
 import './styles/components/App.css';
 
@@ -14,15 +13,14 @@ import './styles/components/App.css';
 export default function App() {
   return (
     <BrowserRouter>
-    <Nav />
-      <main className="main-container">
+      <AuthProvider>
         <Routes>
-          <Route path="/" element={<DashboardPage />} />
-          {/* <Route path="/locations" element={<LocationsPage />} />
-          <Route path="/solicitors" element={<SolicitorsPage />} /> */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route element={<ProtectedLayout />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+          </Route>
         </Routes>
-      </main>
-      <Footer />
+      </AuthProvider>
     </BrowserRouter>
   );
 }
