@@ -29,7 +29,7 @@ const LoginPage = () => {
     try {
       await axiosClient.post('auth/login', loginRequest);
       await checkAuth();
-      navigate('/dashboard');
+      navigate('/');
     } catch (err) {
       setError('Invalid username or password');
     } finally {
@@ -69,7 +69,7 @@ const LoginPage = () => {
 
           {error && <div className="error-message">{error}</div>}
 
-          <button type="submit" className="button button-primary" disabled={isLoading}>
+          <button type="submit" className="button button-blue" disabled={isLoading}>
             {isLoading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>

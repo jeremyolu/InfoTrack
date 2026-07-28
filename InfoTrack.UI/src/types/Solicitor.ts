@@ -1,9 +1,9 @@
-export interface Solicitor {
+export default interface Solicitor {
   name: string;
   description: string;
   logoUrl: string;
-  Address: Address;
-  ContactDetails: ContactDetails;
+  address: Address;
+  contactDetails: ContactDetails;
 }
 
 interface Address {

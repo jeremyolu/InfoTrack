@@ -1,4 +1,4 @@
 // types/solicitor.ts
-export interface Location {
+export default interface Location {
   name: string;
 }

@@ -24,7 +24,8 @@ public class SolicitorService : ISolicitorService
 
         try
         {
-            var results = await _solicitorProvider.GetSolicitorsByLocationAsync(location);
+
+            var results = await _solicitorProvider.GetSolicitorsByLocationAsync(location.ToLower());
 
             if (results == null || !results.Any())
             {
@@ -46,7 +47,7 @@ public class SolicitorService : ISolicitorService
                         Telephone = x.Telephone,
                         Website = x.Website
                     },
-                    LogoUrl = $"https://www.solicitors.com{x.LogoUrl}",
+                    LogoUrl = $"https://www.solicitors.com/{x.LogoUrl}",
                 };
 
                 solicitors.Add(solicitor);

@@ -1,4 +1,4 @@
-export interface ResultsResponse<T> {
+export default interface ResultsResponse<T> {
   count: number;
   results: T[];
   statusCode: number;
