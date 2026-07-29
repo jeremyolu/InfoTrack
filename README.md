@@ -9,7 +9,7 @@ Before running the application, ensure you have the following installed:
 
 ---
 
-## Endpoints
+## Base URLS
 
 ### API
 
