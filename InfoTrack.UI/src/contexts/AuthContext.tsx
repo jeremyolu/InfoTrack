@@ -1,27 +1,29 @@
 // AuthContext.tsx
 import { createContext, useContext, useState, useEffect } from 'react';
-import type { ReactNode } from 'react';
-
 import { axiosClient, setUnauthorizedHandler } from '../clients/axiosClient';
 
-interface AuthContextType {
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  checkAuth: () => Promise<void>;
-  logout: () => Promise<void>;
-}
+import type { ReactNode } from 'react';
+import type AuthContextType from '../types/data/AuthContextType';
+import { HttpStatusCode } from 'axios';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const checkAuth = async () => {
     try {
-      await axiosClient.get('auth/account');
-      setIsAuthenticated(true);
+      const response = await axiosClient.get('auth/account');
+
+      if (response.status === HttpStatusCode.Ok) {
+        setUser(response.data.result);
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
     } catch {
       setIsAuthenticated(false);
     } finally {
@@ -33,6 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       await axiosClient.post('auth/logout');
     } finally {
+      setUser(null);
       setIsAuthenticated(false);
     }
   };
@@ -43,7 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, checkAuth, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, isLoading, checkAuth, logout }}>
       {children}
     </AuthContext.Provider>
   );

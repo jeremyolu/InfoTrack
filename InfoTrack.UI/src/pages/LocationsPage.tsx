@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { axiosClient } from '../clients/axiosClient';
 import { useNavigate } from 'react-router-dom';
 
-import type ResultsResponse from '../types/ResultsResponse';
-import type Location from '../types/Location';
+import type ResultsResponse from '../types/responses/ResultsResponse';
+import type Location from '../types/data/Location';
 
 import '../styles/pages/Data.css';
 
@@ -35,7 +35,8 @@ export default function LocationsPage() {
     return (
       <div className="page">
         <div className="page-header">
-            <h1>Solicitor Locations</h1>
+          <h1>Solicitor Locations</h1>
+          <button className="button button-blue" onClick={() => navigate(-1)} >Back</button>
         </div>
 
         {isLoading && <p className="loading">Loading locations...</p>}
@@ -60,7 +61,7 @@ export default function LocationsPage() {
               {locations.map((location, index) => (
                 <tr key={index}>
                   <td className="td">{location.name}</td>
-                  <td className="td"> <button type="button" className="button button-blue" onClick={() => navigate(`/solicitors/${location.name}`)}>View</button></td>
+                  <td className="td"> <button type="button" className="button button-blue" onClick={() => navigate(`/solicitors/${location.name.toLowerCase()}`)}>View</button></td>
                 </tr>
               ))}
             </tbody>

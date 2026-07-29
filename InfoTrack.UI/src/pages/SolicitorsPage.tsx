@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { axiosClient } from '../clients/axiosClient';
 
-import type ResultsResponse from '../types/ResultsResponse';
-import type Solicitor from '../types/Solicitor';
-import type Location from '../types/Location';
+import type ResultsResponse from '../types/responses/ResultsResponse';
+import type Solicitor from '../types/data/Solicitor';
+import type Location from '../types/data/Location';
 
 import '../styles/pages/Data.css';
 
@@ -60,22 +60,27 @@ export default function SolicitorsPage() {
     navigate(`/solicitors/${newLocation.toLowerCase()}`);
   };
 
-  const handleView = (website: string) => {
-   // TODO: navigate to solictor dedicated view
+  const handleView = (solicitor: Solicitor) => {
+    const formatName = solicitor.name.replace(" ", "-").toLowerCase();
+    navigate(`/solicitors?name=${encodeURIComponent(formatName)}`, {
+      state: { solicitor }
+    });
   };
 
   return (
     <div className="page">
       <div className="page-header">
         <h1>Solicitors in {location}</h1>
-
-        <select className="select" value={location} onChange={handleLocationChange}>
+        <div className="page-header-right">
+          <select className="select" value={location} onChange={handleLocationChange}>
             {locations.map((loc) => (
               <option key={loc.name} value={loc.name.toLowerCase()}>
                   {loc.name}
               </option>
             ))}
-        </select>
+          </select>
+          <button className="button button-blue" onClick={() => navigate(-1)} >Back</button>
+        </div>
       </div>
 
       {isLoading && <p className="loading">Loading solicitors...</p>}
@@ -111,7 +116,7 @@ export default function SolicitorsPage() {
                   <button
                     type="button"
                     className="button button-blue"
-                    onClick={() => handleView(solicitor.contactDetails.website)}>Visit
+                    onClick={() => handleView(solicitor)}>View
                   </button>
                 </td>
               </tr>

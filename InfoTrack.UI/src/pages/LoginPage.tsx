@@ -1,10 +1,10 @@
 // LoginPage.tsx
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-import type { LoginRequest } from '../types/requests/LoginRequest';
 import { axiosClient } from '../clients/axiosClient';
 import { useAuth } from '../contexts/AuthContext';
+import Logo from "../assets/infotrack_logo.png";
+import type { LoginRequest } from '../types/requests/LoginRequest';
 
 import '../styles/pages/Login.css';
 
@@ -40,6 +40,9 @@ const LoginPage = () => {
   return (
     <div className="login-page">
       <div className="login-card">
+        <div className="logo-container">
+          <img src={Logo} alt="InfoTrack logo" />
+        </div>
         <h1 className="login-title">Sign In</h1>
 
         <form onSubmit={handleSubmit} className="login-form">

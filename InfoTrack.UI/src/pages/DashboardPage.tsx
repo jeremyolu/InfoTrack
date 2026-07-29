@@ -3,7 +3,7 @@ import Logo from "../assets/infotrack_logo.png";
 
 import '../styles/pages/Dashboard.css';
 
-export function DashboardPage() {
+export default function DashboardPage() {
 
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ export function DashboardPage() {
           <div className="dashboard-item-content">
             <h2 className="dashboard-item-title">Solicitors</h2>
             <p className="dashboard-item-text">View a list of specified solicitors</p>
-            <button type="button" className="button button-white" onClick={() =>navigate('/solicitors')}>
+            <button type="button" className="button button-white" onClick={() => navigate(`/solicitors/london`)}>
                 View Solicitors
             </button>
           </div>

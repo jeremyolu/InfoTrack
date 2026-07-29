@@ -1,8 +1,8 @@
 import { axiosClient } from "../clients/axiosClient";
 
-import type { ResultsResponse } from "../types/ResultsResponse";
-import type { Location } from "../types/Location";
-import type { Solicitor } from "../types/Solicitor";
+import type { ResultsResponse } from "../types/responses/ResultsResponse";
+import type { Location } from "../types/data/Location";
+import type { Solicitor } from "../types/data/Solicitor";
 
 export async function fetchLocations(): Promise<ResultsResponse<Location>> {
   const { data } = await axiosClient.get("/locations");
