@@ -37,6 +37,8 @@ public class AuthService : IAuthService
             {
                 response.StatusCode = HttpStatusCode.InternalServerError;
                 response.Message = "Unknown error occurred.";
+
+                return response;
             }
                 
             var user = _userRepository.GetUser(userId);
@@ -62,7 +64,7 @@ public class AuthService : IAuthService
         catch (Exception ex)
         {
             response.StatusCode = HttpStatusCode.InternalServerError;
-            response.Message = string.IsNullOrWhiteSpace(ex.InnerException?.Message) ? ex.InnerException?.Message : ex.Message;
+            response.Message = !string.IsNullOrWhiteSpace(ex.InnerException?.Message) ? ex.InnerException?.Message : ex.Message;
         }
 
         return await Task.FromResult(response);

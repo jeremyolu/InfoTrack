@@ -48,7 +48,7 @@ public class SolicitorScraperProvider : ISolicitorProvider
             }
         }
 
-        return solicitors;
+        return await Task.FromResult(solicitors);
     }
 
     private string? GetValueFromHtmlElement(string input, string htmlElementPattern)

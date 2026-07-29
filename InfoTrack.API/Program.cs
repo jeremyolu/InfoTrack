@@ -36,8 +36,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.SameSite = SameSiteMode.None;
         options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
         options.SlidingExpiration = true; 
-
         options.LoginPath = "/infotrack/api/auth/login";
+
         options.Events.OnRedirectToLogin = context =>
         {
             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;

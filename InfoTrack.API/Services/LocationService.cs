@@ -23,6 +23,14 @@ public class LocationService : ILocationService
         {
             var locations = _locationRepository.GetLocations();
 
+            if (locations == null || !locations.Any())
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+                response.Message = $"Unable to retrive locations at the moment.";
+
+                return response;
+            }
+
             response.Count = locations.Count();
             response.StatusCode = HttpStatusCode.OK;
             response.Results = locations;
